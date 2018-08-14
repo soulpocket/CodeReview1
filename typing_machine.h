@@ -9,11 +9,11 @@
 
 class TypingMachine {
 private:
-	Node *cursor;
-	int isLeft;
-	int count;
+  Node *cursor;
+  int isLeft;
+  int charCount;
 
- public:
+public:
   TypingMachine();
   void HomeKey();
   void EndKey();

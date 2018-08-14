@@ -3,20 +3,17 @@
 #include "node.h"
 
 Node::Node(char data) {
-
-	ch = data;
-	pre = nullptr;
-	next = nullptr;
-
-  return;
+  this->data = data;
+  previous = nullptr;
+  next = nullptr;
 }
 
 char Node::GetData() {
-  return ch;
+  return data;
 }
 
 Node* Node::GetPreviousNode() {
-  return pre;
+  return previous;
 }
 
 Node* Node::GetNextNode() {
@@ -24,66 +21,62 @@ Node* Node::GetNextNode() {
 }
 
 Node* Node::InsertPreviousNode(char data) {
-  
-	Node *nn = new Node(data); // newnode
-	
-	if (pre != nullptr) {
-		pre->next = nn;
-	}
 
-	nn->pre = pre;
-	nn->next = this;
-	pre = nn;
+  Node *newNode = new Node(data);
 
-	return nn;
+  if (previous != nullptr) {
+    previous->next = newNode;
+  }
+
+  newNode->previous = previous;
+  newNode->next = this;
+  previous = newNode;
+
+  return newNode;
 }
 
 Node* Node::InsertNextNode(char data) {
-	Node *nn = new Node(data); // newnode
+  Node *newNode = new Node(data);
 
-	if (next != nullptr) {
-		next->pre = nn;
-	}
+  if (next != nullptr) {
+    next->previous = newNode;
+  }
 
-	nn->next = next;
-	nn->pre = this;
-	next = nn;
+  newNode->next = next;
+  newNode->previous = this;
+  next = newNode;
 
-	return nn;
+  return newNode;
 }
 
 bool Node::ErasePreviousNode() {
-	if(pre == nullptr) {
-		return false;
-	}
+  if (previous == nullptr) {
+    return false;
+  }
 
-	Node *del = pre;
+  Node *delNode = previous;
+  if (delNode->previous != nullptr) {
+    delNode->previous->next = this;
+  }
 
-	if(del->pre != nullptr) {
-		del->pre->next = this;
-	}
+  previous = delNode->previous;
+  delete delNode;
 
-	pre = del->pre;
-
-	delete del;
-
-	return true;
+  return true;
 }
 
 bool Node::EraseNextNode() {
-	if (next == nullptr) {
-		return false;
-	}
+  if (next == nullptr) {
+    return false;
+  }
 
-	Node *del = next;
+  Node *delNode = next;
+  if (delNode->next != nullptr) {
+    delNode->next->previous = this;
+  }
 
-	if (del->next != nullptr) {
-		del->next->pre = this;
-	}
+  next = delNode->next;
+  delete delNode;
 
-	next = del->next;
-
-	delete del;
-
-	return true;
+  return true;
 }

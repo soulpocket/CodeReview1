@@ -6,11 +6,11 @@
 class Node {
 private:
 
-	char ch;
-	Node *pre;
-	Node *next;
+  char data;
+  Node *previous;
+  Node *next;
 
- public:
+public:
   explicit Node(char data);
   char GetData();
   Node* InsertPreviousNode(char data);
